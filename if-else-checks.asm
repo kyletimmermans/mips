@@ -7,8 +7,8 @@
 
 # Variables in RAM
 .data
-	x: .word 5
-	y: .word 2
+	x: .word 1
+	y: .word 12
 	xEquals: .asciiz "x="
 	yEquals: .asciiz " y=" #Need a space here
 	zEquals: .asciiz " z=" #Need a space here
@@ -53,11 +53,12 @@ main: #main()
 compare:
 	move $t0,$a1 #$t0=x
 	move $t1,$a0 #t1=y
-	beq $t0,$t1,adder #If x==y
+	beq $t0,$t1,adder #If x==y  # or beq
 	addi $t1,$t1,3 #y+3
 	#If x==y+3
-	beq $t0,$t1,subtracter
-	add $v0,$0,$0
+	beq $t0,$t1,subtracter   # or beq
+	add $v0,$0,$0  # finally, if not either of those, make it zero
+	j return  # Return the final case z=0, if need be
 adder:
 	add $v0,$t0,$t1
 	j return #z=x+y
@@ -66,3 +67,4 @@ subtracter:
 	j return #z=x-y
 return:
 	jr $ra #z final answer
+
