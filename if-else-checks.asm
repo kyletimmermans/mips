@@ -9,7 +9,6 @@
 .data
 	x: .word 3
 	y: .word 3
-	#z: .word 0  # init value
 	xEquals: .asciiz "x="
 	yEquals: .asciiz " y=" #Need a space here
 	zEquals: .asciiz " z=" #Need a space here
@@ -35,15 +34,15 @@ main: #main()
        move $a0, $t0
        li $v0, 1
        syscall
-       # Load x and y into compare
-       jal compare   # or jal compare
+       # jump and link register
+       jal compare   
        move $s0, $v0
        #Print zEquals
        li $v0,4
        la $a0,zEquals
        syscall
        # Print z
-       move $a0, $s0    # problem here
+       move $a0, $s0    
        li $v0, 1
        syscall
        #End of main
@@ -52,24 +51,18 @@ main: #main()
        syscall
 	
 compare:
-	#t0=x
-	move $t0,$a1
-	#t1=y
-	move $t1,$a0
-	#If x==y
-	beq $t0,$t1,setZ
-	#y+3
-	addi $t1,$t1,3
+	move $t0,$a1 #$t0=x
+	move $t1,$a0 #t1=y
+	beq $t0,$t1,adder #If x==y
+	addi $t1,$t1,3 #y+3
 	#If x==y+3
-	beq $t0,$t1,setZNext
+	beq $t0,$t1,subtracter
 	add $v0,$0,$0
-setZ:
+adder:
 	add $v0,$t0,$t1
-	j ret
-	#z=x-y
-setZNext:
+	j return #z=x+y
+subtracter:
 	sub $v0,$t0,$a0
-	j ret
-ret:
-	jr $ra
-	#z=x+y
+	j return #z=x-y
+return:
+	jr $ra #z final answer
