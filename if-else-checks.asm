@@ -7,8 +7,8 @@
 
 # Variables in RAM
 .data
-	x: .word 3
-	y: .word 3
+	x: .word 5
+	y: .word 2
 	xEquals: .asciiz "x="
 	yEquals: .asciiz " y=" #Need a space here
 	zEquals: .asciiz " z=" #Need a space here
@@ -30,8 +30,8 @@ main: #main()
        la $a0,yEquals
        syscall
        # Load in y
-       lw $t1, x
-       move $a0, $t0
+       lw $t1, y
+       move $a0, $t1
        li $v0, 1
        syscall
        # jump and link register
