@@ -65,7 +65,7 @@ lw $t2, answer #t2 stores sum
        li $v0,4
        la $a0,newLine
        syscall
-       #Print "quotient = 
+       #Print "quotient = "
        li $v0,4
        la $a0,quotient
        syscall
